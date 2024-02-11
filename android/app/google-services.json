@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "240910362155",
+    "project_id": "todo-nic-assig",
+    "storage_bucket": "todo-nic-assig.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240910362155:android:0208e5e274579fbce82c6e",
+        "android_client_info": {
+          "package_name": "com.awan.firebase_assig"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChBrZNQyuWdhPvUT0B0_4cknDGJRHlzD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
