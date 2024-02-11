@@ -1,5 +1,9 @@
+import 'package:firebase_assig/screens/home_screen.dart';
+import 'package:firebase_assig/screens/signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,8 +14,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late String email, password;
+  bool obscureText = true;
+  String? email, password;
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    email;
+    password;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   decoration: const InputDecoration(
                     hintText: 'Email',
+                    prefixIcon: Icon(Icons.person),
                     border: OutlineInputBorder(),
                   ),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")),
-                  ],
                   keyboardType: TextInputType.emailAddress,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
@@ -46,13 +55,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const Gap(16),
                 TextFormField(
+                  obscureText: obscureText,
                   keyboardType: TextInputType.visiblePassword,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Password',
-                    border: OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obscureText = !obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          obscureText ? Icons.visibility_off : Icons.visibility,
+                        )),
+                    border: const OutlineInputBorder(),
                   ),
-                  validator: (text){
-                    if(text == null || text.isEmpty){
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
                       return 'Please enter your password';
                     }
                     password = text.trim();
@@ -60,11 +80,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const Gap(16),
-                ElevatedButton(onPressed: () {
-
-                }, child: const Text('Login')),
+                ElevatedButton(
+                    onPressed: () async {
+                      if (formKey.currentState!.validate()) {
+                        FirebaseAuth auth = FirebaseAuth.instance;
+                        UserCredential userCre =
+                            await auth.signInWithEmailAndPassword(
+                                email: email.toString().toString(),
+                                password: password.toString().trim());
+                        if (userCre != null) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                            return const HomeScreen();
+                          }));
+                        } else {
+                          Fluttertoast.showToast(msg: 'UnSucess');
+                        }
+                      }
+                    },
+                    child: const Text('Login')),
                 const Gap(16),
-                TextButton(onPressed: () {}, child: const Text('SignUp Here!'))
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignupScreen()));
+                    },
+                    child: const Text('SignUp Here!'))
               ],
             )),
       ),
