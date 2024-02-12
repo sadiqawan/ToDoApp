@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const Gap(16),
                 TextFormField(
-                  obscureText: true,
+
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
                     hintText: 'Phone',

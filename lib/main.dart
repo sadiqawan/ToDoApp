@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
       options: const FirebaseOptions(
     apiKey: 'AIzaSyChBrZNQyuWdhPvUT0B0_4cknDGJRHlzD8',
@@ -14,6 +15,7 @@ void main() async {
     projectId: 'todo-nic-assig',
     storageBucket: 'todo-nic-assig.appspot.com',
   ));
+
 
   runApp(const MyApp());
 }
@@ -25,8 +27,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Firebase assignment',
       theme: ThemeData(
+        appBarTheme:const  AppBarTheme(color: Colors.lightBlueAccent, centerTitle: true),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
