@@ -19,7 +19,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final formKey = GlobalKey<FormState>();
   String? name, email, password, phone;
 
-
   var selectedGender;
 
   List<String> genderSelect = ['Male', 'Female'];
@@ -78,7 +77,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   decoration: const InputDecoration(
                     hintText: 'Select gender',
                     border: OutlineInputBorder(),
-                  ),// assuming selectedGender is a variable holding the selected value
+                  ),
+                  // assuming selectedGender is a variable holding the selected value
                   items: genderSelect.map((String val) {
                     return DropdownMenuItem(
                       value: val,
@@ -87,11 +87,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      selectedGender = value; // assuming selectedGender is a variable in your stateful widget
+                      selectedGender =
+                          value; // assuming selectedGender is a variable in your stateful widget
                     });
                   },
                 ),
-
                 const Gap(16),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -193,7 +193,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                     child: const Text('SignUp')),
                 const Gap(16),
-                TextButton(onPressed: () {}, child: const Text('Login Here!'))
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Login Here!'))
               ],
             )),
       ),

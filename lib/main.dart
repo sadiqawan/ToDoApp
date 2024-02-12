@@ -1,4 +1,6 @@
+import 'package:firebase_assig/screens/home_screen.dart';
 import 'package:firebase_assig/screens/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +27,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Firebase assignment',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: (FirebaseAuth.instance != null &&
+              FirebaseAuth.instance.currentUser!.emailVerified)
+          ? const HomeScreen()
+          : const LoginScreen(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:firebase_assig/screens/home_screen.dart';
 import 'package:firebase_assig/screens/signup_screen.dart';
+import 'package:firebase_assig/screens/verification_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -82,21 +83,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Gap(16),
                 ElevatedButton(
                     onPressed: () async {
+                    try{
                       if (formKey.currentState!.validate()) {
                         FirebaseAuth auth = FirebaseAuth.instance;
                         UserCredential userCre =
-                            await auth.signInWithEmailAndPassword(
-                                email: email.toString().toString(),
-                                password: password.toString().trim());
-                        if (userCre != null) {
+                        await auth.signInWithEmailAndPassword(
+                            email: email.toString().toString(),
+                            password: password.toString().trim());
+                        if (userCre.user!.emailVerified) {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) {
-                            return const HomeScreen();
-                          }));
+                                return const HomeScreen();
+                              }));
                         } else {
-                          Fluttertoast.showToast(msg: 'UnSucess');
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const  VerificationScreen();
+                          }));
                         }
                       }
+                    } on FirebaseAuthException catch(e){
+                      Fluttertoast.showToast(msg: e.message!, fontSize: 25 );
+                    }
                     },
                     child: const Text('Login')),
                 const Gap(16),
