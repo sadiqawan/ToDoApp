@@ -165,7 +165,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             await auth.createUserWithEmailAndPassword(
                                 email: email.toString().trim(),
                                 password: password.toString().trim());
-                        if (userCre != null) {
+                        if (userCre.user != null) {
                           // here we can store a data in firebaseDatabase.
                           FirebaseFirestore firebaseFirestore =
                               FirebaseFirestore.instance;
